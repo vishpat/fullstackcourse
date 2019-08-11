@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom';
 
 const App = props => {
   const [counter, setCounter] = useState(0);
-  const handleClick = () => {
-    setCounter(counter + 1);
+  const setValue = value => {
+    return () => setCounter(value);
   };
 
   return (
     <div>
       {counter}
-      <button onClick={() => setCounter(counter + 1)}> Inc </button>
-      <button onClick={() => setCounter(0)}> reset </button>
+      <button onClick={setValue(counter + 1)}> Inc </button>
+      <button onClick={setValue(0)}> reset </button>
     </div>
   );
 };
