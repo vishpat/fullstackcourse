@@ -1,28 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = props => {
+const Header = ({ course }) => {
   return (
     <div>
-      <h1> {props.course.name} </h1>
+      <h1> {course.name} </h1>
     </div>
   );
 };
 
-const Part = props => {
+const Part = ({ name, count }) => {
   return (
     <div>
       <p>
-        {props.name} {props.count}
+        {name} {count}
       </p>
     </div>
   );
 };
 
-const Content = props => {
+const Content = ({ course }) => {
   return (
     <div>
-      {props.course.parts.map(part => (
+      {course.parts.map(part => (
         <p>
           <Part name={part.name} count={part.exercises} />
         </p>
@@ -31,9 +31,9 @@ const Content = props => {
   );
 };
 
-const Total = props => {
+const Total = ({ course }) => {
   let sum = 0;
-  props.course.parts.forEach(element => {
+  course.parts.forEach(element => {
     sum += element.exercises;
   });
 
