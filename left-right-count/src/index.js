@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Counter = ({ left, right }) => {
+const Counter = ({ left, right, data }) => {
+  const data_str = data.join(' ');
   return (
     <div>
       <h1> {left} </h1>
       <h1> {right} </h1>
+      <h1> {data_str} </h1>
     </div>
   );
 };
@@ -19,11 +21,12 @@ const Button = ({ text, onClick }) => {
 };
 
 const App = props => {
-  const [clicks, setCounter] = useState({ left: 0, right: 0 });
+  const [clicks, setCounter] = useState({ left: 0, right: 0, data: [] });
   const left_click = () => {
     const new_clicks = {
       ...clicks,
-      left: (clicks.left += 1)
+      left: (clicks.left += 1),
+      data: clicks.data.concat('L')
     };
     setCounter(new_clicks);
   };
@@ -31,13 +34,14 @@ const App = props => {
   const right_click = () => {
     const new_clicks = {
       ...clicks,
-      right: (clicks.right += 1)
+      right: (clicks.right += 1),
+      data: clicks.data.concat('R')
     };
     setCounter(new_clicks);
   };
   return (
     <div>
-      <Counter left={clicks.left} right={clicks.right} />
+      <Counter left={clicks.left} right={clicks.right} data={clicks.data} />
       <Button onClick={left_click} text="left" />
       <Button onClick={right_click} text="right" />
     </div>
