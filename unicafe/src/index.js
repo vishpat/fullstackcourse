@@ -1,40 +1,16 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const FeedBackLabel = ({ name, value }) => {
+const StatsLabel = ({ name, value }) => {
   return (
-    <div>
-      <h1>
-        {name} : {value}
-      </h1>
-    </div>
-  );
-};
-
-const StatsLabel = ({ all, good }) => {
-  if (all > 0) {
-    return (
-      <div>
-        <FeedBackLabel name="all" value={all} />
-        <FeedBackLabel name="avg" value={all / 3} />
-        <FeedBackLabel name="positive" value={(good / all) * 100} />
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <h1> No stats yet </h1>
-    </div>
+    <tr>
+      <td>{name}</td> <td>{value} </td>
+    </tr>
   );
 };
 
 const FeedBackButton = ({ onClick, text }) => {
-  return (
-    <div>
-      <button onClick={onClick}> {text} </button>
-    </div>
-  );
+  return <button onClick={onClick}> {text} </button>;
 };
 
 const App = () => {
@@ -59,16 +35,33 @@ const App = () => {
     setAll(all + 1);
   };
 
+  if (all > 0) {
+    return (
+      <div>
+        <h1> Provide Feedback</h1>
+        <FeedBackButton onClick={handleGoodClick} text="Good" />
+        <FeedBackButton onClick={handleBadClick} text="Bad" />
+        <FeedBackButton onClick={handleNeutralClick} text="Neutral" />
+        <h1> Statistics</h1>
+        <table>
+          <StatsLabel name="good" value={good} />
+          <StatsLabel name="bad" value={bad} />
+          <StatsLabel name="neutral" value={neutral} />
+          <StatsLabel name="all" value={all} />
+          <StatsLabel name="average" value={all / 3} />
+          <StatsLabel name="positive" value={(good / all) * 100.0} />
+        </table>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1> Provide Feedback</h1>
-      <FeedBackLabel name="good" value={good} />
-      <FeedBackLabel name="bad" value={bad} />
-      <FeedBackLabel name="neutral" value={neutral} />
-      <StatsLabel good={good} all={all} />
       <FeedBackButton onClick={handleGoodClick} text="Good" />
       <FeedBackButton onClick={handleBadClick} text="Bad" />
       <FeedBackButton onClick={handleNeutralClick} text="Neutral" />
+      <h1> No stats yet</h1>
     </div>
   );
 };
