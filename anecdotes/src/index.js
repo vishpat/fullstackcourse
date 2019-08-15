@@ -20,6 +20,20 @@ const anecdotes = [
 
 const App = props => {
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState([0, 0, 0, 0, 0, 0]);
+  const [maxVoteIndex, setMaxVoteIndex] = useState(0);
+
+  const handleVote = () => {
+    const new_votes = [...votes];
+    new_votes[selected] += 1;
+    setVotes(new_votes);
+
+    const current_max_votes = votes[maxVoteIndex];
+    if (votes[selected] > current_max_votes) {
+      console.log('Updating maxVoteIndex to', selected);
+      setMaxVoteIndex(selected);
+    }
+  };
 
   const handleAnecdoteButtonClick = () => {
     const anecdote_count = anecdotes.length;
@@ -30,7 +44,12 @@ const App = props => {
   return (
     <div>
       <AnecdoteButton onClick={handleAnecdoteButtonClick} text="next Anecdote" />
+      <AnecdoteButton onClick={handleVote} text="Vote !!!" />
+
+      <h1> votes : {votes[selected]} </h1>
       <h1> {anecdotes[selected]}</h1>
+      <h1> Most popular anecdote </h1>
+      <h1> {anecdotes[maxVoteIndex]} </h1>
     </div>
   );
 };
