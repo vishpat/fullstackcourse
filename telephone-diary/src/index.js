@@ -1,30 +1,35 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import React, { useState } from 'react';
+import uuid from 'uuid';
 
 const App = () => {
-  const [note, setNote] = useState('');
-  const [notes, setNotes] = useState([]);
+  const [note, setNote] = useState({ id: '', name: '' });
+  const [notes, setNotes] = useState([{ id: '', name: '' }]);
 
   const addNote = event => {
     event.preventDefault();
     const newNodes = notes.concat(note);
     setNotes(newNodes);
-    setNote('');
+    setNote({ id: '', name: '' });
   };
 
   const handleNoteChange = event => {
-    setNote(event.target.value);
+    const noteID = uuid.v4();
+    const note = { id: noteID, name: event.target.value };
+    setNote(note);
   };
 
   return (
     <div>
       <form onSubmit={addNote}>
-        <input value={note} onChange={handleNoteChange} /> <button type="submit">save</button>
+        <input value={note.name} onChange={handleNoteChange} /> <button type="submit">save</button>
       </form>
 
       {notes.map(note => (
-        <li key={notes.indexOf(note)}> {note}</li>
+        <li key={note.id}>
+          {note.name} {note.id}
+        </li>
       ))}
     </div>
   );
